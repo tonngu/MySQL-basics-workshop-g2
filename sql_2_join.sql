@@ -87,11 +87,21 @@ select c1.`Name` from city c1 join country c2 ON c1.countrycode = c2.`Code` wher
 (select countrycode from city where `name` = 'Yaren')
 );
 
-
+select c1.`Name` from city c1
+join country c2 on c1.countrycode = c2.`Code`
+join country c3 on c2.region = c3.region
+join city c4 on c3.`Code` = c4.CountryCode where c4.`name` = 'Yaren';
 #
 #
 # 19: What unique languages are spoken in the countries in the same region as the city named Riga
+select distinct c1.`Language` from countrylanguage c1 
+join country c2 on c1.countrycode = c2.`code`
+join country c3 on c2.region = c3.region
+join city c4 on c3.`Code` = c4.countrycode where c4.`name` = 'Riga';
 #
 #
 # 20: Get the name of the most populous city
 #
+select c1.`Name` from city c1 join city c2 on c1.population = c2.population where c2.population = (select max(population) from city);
+select `Name` from city order by population desc limit 1;
+select `Name` from city where population = (select max(population) from city);
